@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 0f1994b0c7682be48926eab0cd0f8627
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - itemIconImage: {instanceID: 0}
+  - itemNameText: {instanceID: 0}
+  - thisItem: {instanceID: 0}
+  - onStartHoveringItem: {fileID: 11400000, guid: 74460b714bf7f0f4294eb1a33a44d566, type: 2}
+  - quantityToBuyOrSell: {instanceID: 0}
+  - confirmWindow: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: a55abde9090534241924e198708c3037
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - buttonPrefab: {fileID: 1417959916229234663, guid: 036b986405d2e0141aa1de6c9ef84b97, type: 3}
+  - buttonHolderTransform: {instanceID: 0}
+  - playerInventory: {instanceID: 0}
+  - inventoryCanvas: {instanceID: 0}
+  - rarityListReference: {fileID: 11400000, guid: acb38a34f30e95449ab752356d906d1f, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

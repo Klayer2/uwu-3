@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4917fcf5f3137d44ba7456b6a05c213f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - npcNameText: {instanceID: 0}
+  - occupationButtonHolder: {instanceID: 0}
+  - occupationButtonPrefab: {instanceID: 0}
+  - closeButtonPrefab: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
