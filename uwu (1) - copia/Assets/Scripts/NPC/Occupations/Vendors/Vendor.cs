@@ -1,6 +1,5 @@
 using ReLost.Events;
 using ReLost.PlayerInventory.Items;
-using ReLost.Utilities;
 using UnityEngine;
 
 namespace ReLost.NPCs.Occupations.Vendors

@@ -1,8 +1,6 @@
-using ReLost.PlayerInventory.Items.Hotbars;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace ReLost.PlayerInventory.Items
 {

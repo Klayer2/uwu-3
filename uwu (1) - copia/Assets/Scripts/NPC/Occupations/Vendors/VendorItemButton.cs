@@ -1,10 +1,8 @@
 ﻿using ReLost.Events;
 using ReLost.PlayerInventory.Items;
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace ReLost.NPCs.Occupations.Vendors
 {
@@ -50,14 +48,14 @@ namespace ReLost.NPCs.Occupations.Vendors
                 } 
                 else
                 {
-                    thisItemQuantityText.text = quantity.ToString();
+                    thisItemQuantityText.text = $"{quantity}";
                 }
-                thisItemPriceText.text = item.BuyPrice.ToString();
+                thisItemPriceText.text = $"{item.BuyPrice} <sprite=0>";
             }
             else
             {
                 thisItemQuantityText.text = "";
-                thisItemPriceText.text = item.SellPrice.ToString();
+                thisItemPriceText.text = $"{item.SellPrice}";
             }
         }
 

@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
-using ReLost.NPCs.Occupations.Vendors;
 
 namespace ReLost.PlayerInventory.Items
 {

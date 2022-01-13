@@ -1,11 +1,7 @@
 using ReLost.NPCs.Occupations.Vendors;
 using ReLost.PlayerInventory.Items;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BuySellQuantity : MonoBehaviour
 {
@@ -19,7 +15,6 @@ public class BuySellQuantity : MonoBehaviour
     [SerializeField] private Inventory playerInventory;
     private VendorData scenarioData;
     private int inputQuantityToStringToInt;
-    private double itemInInventoryQuantity;
     private int maxBuyableAmount;
 
 
@@ -183,7 +178,7 @@ public class BuySellQuantity : MonoBehaviour
     {
         if (isPlayerInventorySelling || !(scenarioData.IsFirstContainerBuying))
         { 
-            playerInventory.Money += (thisItem.item.SellPrice * inputQuantityToStringToInt);
+            playerInventory.AddMoney(thisItem.item.SellPrice * inputQuantityToStringToInt);
             playerInventory.RemoveItem(thisItem);
             vendorSystem.SetCurrentContainer(scenarioData.IsFirstContainerBuying);
             
@@ -194,7 +189,7 @@ public class BuySellQuantity : MonoBehaviour
             {
                 thisItem.quantity = maxBuyableAmount;
             }
-            playerInventory.Money -= (thisItem.item.BuyPrice * thisItem.quantity);
+            playerInventory.ReduceMoney(thisItem.item.BuyPrice * thisItem.quantity);
             playerInventory.AddItem(thisItem);
             if (!thisItem.item.IsUnlimited)
             {

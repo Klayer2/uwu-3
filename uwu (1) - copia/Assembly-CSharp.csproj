@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,9 +53,6 @@
     <UnityVersion>2021.2.7f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Assets\Scripts\Hotbar\IHotbarItem.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Listeners\VendorDataListener.cs" />
     <Compile Include="Assets\Scripts\Character\Ability.cs" />
@@ -71,6 +68,7 @@
     <Compile Include="Assets\Scripts\Interactables\ObjectInteractor.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Events\NpcEvent.cs" />
     <Compile Include="Assets\Scripts\Utilities\FpsLimiter.cs" />
+    <Compile Include="Assets\MoneySetter.cs" />
     <Compile Include="Assets\Scripts\Inventory\Inventories\DisplayInventorySystem.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Listeners\IntListener.cs" />
     <Compile Include="Assets\Scripts\NPC\Occupations\Vendors\VendorSystem.cs" />
@@ -81,6 +79,7 @@
     <Compile Include="Assets\Scripts\Inventory\Inventories\Inventory.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Events\IntEvent.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Events\AbilityEvent.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Inventories\ItemTypeList.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Listeners\BaseGameEventListener.cs" />
     <Compile Include="Assets\Scripts\EventSystem\UnityEvents\UnityItemContainerEvent.cs" />
     <Compile Include="Assets\Scripts\EventSystem\UnityEvents\UnityAbilityEvent.cs" />

@@ -14,21 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SimpleSelectedItems:
     m_Keys:
-    - Assets/GameData/Rarity/Legendary.asset
-    - Assets/GameData/Rarity/Legendary.asset.meta
-    - Assets/Resources/Items/Consumables/Aab.asset
-    - Assets/Resources/Items/Consumables/Aab.asset.meta
-    - Assets/Resources/Items/Miscellaneous/Arbol.asset
-    - Assets/Resources/Items/Miscellaneous/Arbol.asset.meta
-    - Assets/Resources/Items/Miscellaneous/Item 1.asset
-    - Assets/Resources/Items/Miscellaneous/Item 1.asset.meta
-    - Assets/Scripts/Inventory/Inventories/Inventory.cs
-    - Assets/Scripts/Inventory/Inventories/InventoryItem.cs
-    - Assets/Scripts/Inventory/Inventories/ItemSlot.cs
-    - Assets/Scripts/NPC/Occupations/Vendors/VendorData.cs
-    - Assets/Scripts/Utilities/FpsLimiter.cs
+    - Assets/Prefabs/Button_VendorItem.prefab
     - 
-    m_Values: 0000000000000000000000000000
+    m_Values: 0101
   RevisionSummary: 
   ChangesSearchValue: 
   SelectedHistoryRevision: 

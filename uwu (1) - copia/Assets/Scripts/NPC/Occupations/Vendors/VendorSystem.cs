@@ -1,8 +1,6 @@
 using ReLost.PlayerInventory.Items;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
 using TMPro;
 
 
@@ -16,10 +14,10 @@ namespace ReLost.NPCs.Occupations.Vendors
         [SerializeField] private Transform buttonHolderTransform = null;
         [SerializeField] private RarityList rarityListReference;
         [SerializeField] private TMP_InputField VendorItemSearchText = null;
+        [SerializeField] private ItemTypeList itemTypeListReference = null;
         private VendorData scenarioData = null;
         private List<InventoryItem> itemsSorted;
-        private int itemType = 0, itemSubType = 0;
-
+        private int itemType = 0;
         public VendorData ScenarioData => scenarioData;
 
         private void Start()
@@ -58,9 +56,9 @@ namespace ReLost.NPCs.Occupations.Vendors
 
             for (int i = 0; i < rarityListReference.rarityList.Length; i++)
             {
-                for (int m = 0; m < 10; m++)
+                for (int m = 0; m < itemTypeListReference.ItemType.Length; m++)
                 {
-                    for (int n = 0; n < 10; n++)
+                    for (int n = 0; n < itemTypeListReference.ItemSubType.Length; n++)
                     {
                         for (int j = 0; j < items.Count; j++)
                         {
@@ -68,7 +66,7 @@ namespace ReLost.NPCs.Occupations.Vendors
                             {
                                 continue;
                             }
-                            if (items[j].Rarity.Name == rarityListReference.rarityList[i].Name && items[j].ItemType == m && items[j].ItemSubType == n)
+                            if (items[j].Rarity.Name == rarityListReference.rarityList[i].Name && items[j].ItemType == itemTypeListReference.ItemType[m] && items[j].ItemSubType == itemTypeListReference.ItemSubType[n])
                             {
                                 itemsSorted.Add(items[j]);
                             }
@@ -118,13 +116,19 @@ namespace ReLost.NPCs.Occupations.Vendors
 
         public void SearchVendorItem()
         {
+            var vendorItemSearchText = VendorItemSearchText.text.ToLower();
             if (VendorItemSearchText == null) { return; }
             for (int i = 0; i < itemsSorted.Count; i++)
             {
                 if (VendorItemSearchText.text == "") { pooledVendorButton[i].gameObject.SetActive(true); continue; }
                 if (itemsSorted[i] == null) { continue; }
 
-                if (itemsSorted[i].name.ToLower().Contains(VendorItemSearchText.text.ToLower()))
+                if (itemsSorted[i].name.ToLower().Contains(vendorItemSearchText))
+                {
+                    pooledVendorButton[i].gameObject.SetActive(true);
+                }
+                else
+                if (itemsSorted[i].Rarity.Name.ToLower() == vendorItemSearchText)
                 {
                     pooledVendorButton[i].gameObject.SetActive(true);
                 }

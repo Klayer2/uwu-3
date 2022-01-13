@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -15,7 +14,9 @@ namespace ReLost.PlayerInventory.Items
         [SerializeField] private int money = 0;
         [SerializeField] private RarityList rarityListReference;
         [SerializeField] private TMP_InputField itemFindText = null;
+        [SerializeField] private TextMeshProUGUI moneyText = null;
         [SerializeField] private DisplayInventorySystem displayInventorySystem;
+        [SerializeField] private ItemTypeList ItemTypeListReference;
 
         private void Awake()
         {
@@ -36,6 +37,23 @@ namespace ReLost.PlayerInventory.Items
             {
                 ByRaritySorter();
             }
+        }
+
+        public void AddMoney(int moneyIn)
+        {
+            money += moneyIn;
+            moneyText.text = $"{money} <sprite=0>";
+        }
+
+        public void ReduceMoney(int moneyOut)
+        {
+            money += moneyOut;
+            moneyText.text = $"{money} <sprite=0>";
+        }
+
+        public void SetMoneyText()
+        {
+            moneyText.text = $"{money} <sprite=0>";
         }
 
         public ItemSlot[] ItemSlots => itemSlots;
@@ -257,17 +275,16 @@ namespace ReLost.PlayerInventory.Items
         public void ByRaritySorter()
         {
 
-            var itemSlotsSortedByRarity = new ItemSlot[itemSlots.Length];
             var itemSlotsSortedByRarityAndType = new ItemSlot[itemSlots.Length];
             var item = new List<ItemSlot>();
-            int lastIndex = 0;
 
             for (int i = 0; i < itemSlots.Length; i++)
             {
+                if (itemSlots[i].item == null) { continue; }
                 for (int j = 0; j < itemSlots.Length; j++)
                 {
+                    if (itemSlots[j].item == null) { continue; }
                     if (i == j) { continue; }
-                    if (itemSlots[i].item == null || itemSlots[j].item == null) { continue; }
                     if (itemSlots[i].item == itemSlots[j].item)
                     {
                         this.AddItem(itemSlots[j]);
@@ -281,9 +298,9 @@ namespace ReLost.PlayerInventory.Items
 
             for (int i = 0; i < rarityListReference.rarityList.Length; i++)
             {
-                for(int m = 0; m < 10; m++)
+                for(int m = 0; m < ItemTypeListReference.ItemType.Length; m++)
                 {
-                    for (int n = 0; n < 10; n++)
+                    for (int n = 0; n < ItemTypeListReference.ItemSubType.Length; n++)
                     {
                         for (int j = 0; j < itemSlots.Length; j++)
                         {
@@ -295,9 +312,9 @@ namespace ReLost.PlayerInventory.Items
                             {
                                 for (int k = 0; k < itemSlots.Length; k++)
                                 {
-                                    if (itemSlotsSortedByRarity[k].item == null)
+                                    if (itemSlotsSortedByRarityAndType[k].item == null)
                                     {
-                                        itemSlotsSortedByRarity[k] = itemSlots[j];
+                                        itemSlotsSortedByRarityAndType[k] = itemSlots[j];
                                         break;
                                     }
                                 }
@@ -310,13 +327,8 @@ namespace ReLost.PlayerInventory.Items
 
             ClearInventory();
 
-            for (int i = 0; i < itemSlotsSortedByRarity.Length; i++)
-            {
-                if (itemSlotsSortedByRarity[i].item != null)
-                {
-                    itemSlots[i] = itemSlotsSortedByRarity[i];
-                }
-            }
+
+            itemSlots = itemSlotsSortedByRarityAndType;
 
             OnInventoryItemsUpdated.Invoke();
         }
@@ -345,13 +357,19 @@ namespace ReLost.PlayerInventory.Items
 
         public void SearchItem()
         {
+            var ItemFindText = itemFindText.text.ToLower();
             if (itemFindText == null) { return; }
             for(int i = 0; i < itemSlots.Length; i++)
             {
                 if(itemFindText.text == "") { displayInventorySystem.PooledInventoryButton[i].GetComponent<InventorySlot>().inventorySlotOutliner.gameObject.SetActive(false); continue; }
                 if(itemSlots[i].item == null) { continue; }
 
-                if (itemSlots[i].item.name.ToLower().Contains(itemFindText.text.ToLower()))
+                if (itemSlots[i].item.name.ToLower().Contains(ItemFindText))
+                {
+                    displayInventorySystem.PooledInventoryButton[i].GetComponent<InventorySlot>().inventorySlotOutliner.gameObject.SetActive(true);
+                }
+                else
+                if(itemSlots[i].item.Rarity.Name.ToLower() == (ItemFindText))
                 {
                     displayInventorySystem.PooledInventoryButton[i].GetComponent<InventorySlot>().inventorySlotOutliner.gameObject.SetActive(true);
                 }

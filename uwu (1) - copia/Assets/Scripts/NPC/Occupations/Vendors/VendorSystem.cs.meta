@@ -3,7 +3,12 @@ guid: 7817d77c457e4f3478877b71bc64d3bc
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - buttonPrefab: {instanceID: 0}
+  - buttonHolderTransform: {instanceID: 0}
+  - rarityListReference: {fileID: 11400000, guid: acb38a34f30e95449ab752356d906d1f, type: 2}
+  - VendorItemSearchText: {instanceID: 0}
+  - itemTypeListReference: {fileID: 11400000, guid: 0b28451751e94f74faab47e0975f3e44, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
