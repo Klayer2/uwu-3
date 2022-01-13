@@ -18,6 +18,7 @@ namespace ReLost.NPCs.Occupations.Vendors
         [SerializeField] private TMP_InputField VendorItemSearchText = null;
         private VendorData scenarioData = null;
         private List<InventoryItem> itemsSorted;
+        private int itemType = 0, itemSubType = 0;
 
         public VendorData ScenarioData => scenarioData;
 
@@ -40,21 +41,42 @@ namespace ReLost.NPCs.Occupations.Vendors
             scenarioData.IsFirstContainerBuying = isBuying;
             var items = scenarioData.SellingItemContainer.GetAllUniqueItems();
 
+            //for (int i = 0; i < rarityListReference.rarityList.Length; i++)
+            //{
+            //    for (int j = 0; j < items.Count; j++)
+            //    {
+            //        if (items[j] == null)
+            //        {
+            //            continue;
+            //        }
+            //        if (items[j].Rarity.Name == rarityListReference.rarityList[i].Name)
+            //        {
+            //            itemsSorted.Add(items[j]);
+            //        }
+            //    }
+            //}
+
             for (int i = 0; i < rarityListReference.rarityList.Length; i++)
             {
-                for (int j = 0; j < items.Count; j++)
+                for (int m = 0; m < 10; m++)
                 {
-                    if (items[j] == null)
+                    for (int n = 0; n < 10; n++)
                     {
-                        continue;
+                        for (int j = 0; j < items.Count; j++)
+                        {
+                            if (items[j] == null)
+                            {
+                                continue;
+                            }
+                            if (items[j].Rarity.Name == rarityListReference.rarityList[i].Name && items[j].ItemType == m && items[j].ItemSubType == n)
+                            {
+                                itemsSorted.Add(items[j]);
+                            }
+                        }
                     }
-                    if (items[j].Rarity.Name == rarityListReference.rarityList[i].Name)
-                    {
-                        itemsSorted.Add(items[j]);                            
-                    }
+
                 }
             }
-
             //for (int i = 0; i < itemsSorted.Length; i++)
             //{
             //    if (itemsSorted[i].item != null)
@@ -115,20 +137,32 @@ namespace ReLost.NPCs.Occupations.Vendors
 
         public void SortByItemType(int type)
         {
+            itemType = type;
+        }
+
+        public void SortByItemSubType(int subType)
+        {
             for (int i = 0; i < itemsSorted.Count; i++)
             {
-                if (type == 0) { pooledVendorButton[i].gameObject.SetActive(true); continue; }
+                if (itemType == 0) { pooledVendorButton[i].gameObject.SetActive(true); continue; }
                 if (itemsSorted[i] == null) { continue; }
 
-                if (itemsSorted[i].ItemType == type)
+                if (subType == 0 && itemsSorted[i].ItemType == itemType)
                 {
                     pooledVendorButton[i].gameObject.SetActive(true);
+                    continue;
                 }
-                else
+
+                if (itemsSorted[i].ItemSubType == subType && itemsSorted[i].ItemType == itemType)
                 {
-                    pooledVendorButton[i].gameObject.SetActive(false);
+                    pooledVendorButton[i].gameObject.SetActive(true);
+                    continue;
                 }
+
+                    pooledVendorButton[i].gameObject.SetActive(false);
+
             }
+
         }
     }
 }

@@ -22,5 +22,5 @@ MonoBehaviour:
   isUnlimited: 1
   isUsableInfinitely: 0
   itemType: 2
-  itemSubType: 1
+  itemSubType: 2
   useText: fuck

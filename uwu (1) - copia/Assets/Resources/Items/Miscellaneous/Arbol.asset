@@ -21,6 +21,6 @@ MonoBehaviour:
   maxStack: 5
   isUnlimited: 0
   isUsableInfinitely: 0
-  itemType: 0
-  itemSubType: 0
+  itemType: 1
+  itemSubType: 1
   useText: Does something, Maybe?

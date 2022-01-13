@@ -22,4 +22,5 @@ MonoBehaviour:
   isUnlimited: 0
   isUsableInfinitely: 0
   itemType: 1
+  itemSubType: 2
   useText: Does something, Maybe?
