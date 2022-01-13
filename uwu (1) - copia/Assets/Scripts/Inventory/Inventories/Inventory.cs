@@ -15,13 +15,11 @@ namespace ReLost.PlayerInventory.Items
         [SerializeField] private int money = 0;
         [SerializeField] private RarityList rarityListReference;
         [SerializeField] private TMP_InputField itemFindText = null;
-        private ItemSlot[] itemSlotsSortedByRarity;
         [SerializeField] private DisplayInventorySystem displayInventorySystem;
 
         private void Awake()
         {
             displayInventorySystem = FindObjectOfType<DisplayInventorySystem>();
-            itemSlotsSortedByRarity = new ItemSlot[itemSlots.Length];
 
             for (int i = 0; i < itemSlots.Length; i++)
             {
@@ -61,18 +59,21 @@ namespace ReLost.PlayerInventory.Items
 
         public ItemSlot AddItem(ItemSlot itemSlot)
         {
-            int thisItemInInventory = GetTotalQuantity(itemSlot.item);
+            if(itemSlot.item == null) { return new ItemSlot(); }
             if (GetAvailableSlots() == 0) { return itemSlot; }
-                int spaceRemainingInSlot = (thisItemInInventory / itemSlot.item.MaxStack) - thisItemInInventory; ;
+            int thisItemInInventory = GetTotalQuantity(itemSlot.item);
+            int spaceRemainingInSlot = (thisItemInInventory / itemSlot.item.MaxStack) - thisItemInInventory;
+            
+
             for (int i = 0; i < itemSlots.Length; i++)
             {
                 if (itemSlots[i].item != null)
                 {
                     if (itemSlots[i].item == itemSlot.item)
                     {
-                        int slotRemainingSpace = itemSlots[i].item.MaxStack - itemSlots[i].quantity;
+                        int RemainingQuantityToBeAdded = itemSlots[i].item.MaxStack - itemSlots[i].quantity;
 
-                        if (itemSlot.quantity <= slotRemainingSpace)
+                        if (itemSlot.quantity <= RemainingQuantityToBeAdded)
                         {
                             itemSlots[i].quantity += itemSlot.quantity;
 
@@ -82,11 +83,11 @@ namespace ReLost.PlayerInventory.Items
 
                             return itemSlot;
                         }
-                        else if (slotRemainingSpace > 0)
+                        else if (RemainingQuantityToBeAdded > 0)
                         {
-                            itemSlots[i].quantity += slotRemainingSpace;
+                            itemSlots[i].quantity += RemainingQuantityToBeAdded;
 
-                            itemSlot.quantity -= slotRemainingSpace;
+                            itemSlot.quantity -= RemainingQuantityToBeAdded;
 
                         }
                     }
@@ -123,6 +124,7 @@ namespace ReLost.PlayerInventory.Items
 
         public int GetTotalQuantity(InventoryItem item)
         {
+            if (item == null) { return 0; }
             int totalCount = 0;
 
             foreach (ItemSlot itemSlot in itemSlots)
@@ -157,6 +159,9 @@ namespace ReLost.PlayerInventory.Items
 
         public void RemoveItem(ItemSlot itemSlot)
         {
+            if (itemSlot.item == null) { return; }
+            if (itemSlot.item.IsUsableInfinitely == true) { return; }
+
             int itemSlotMinus = itemSlot.quantity;
             for (int i = itemSlots.Length - 1; i > -1; i--)
             {
@@ -188,8 +193,9 @@ namespace ReLost.PlayerInventory.Items
 
                     }
                 }
-                onInventoryItemsUpdated.Invoke();
             }
+            onInventoryItemsUpdated.Invoke();
+
         }
 
         public List<InventoryItem> GetAllUniqueItems()
@@ -251,30 +257,56 @@ namespace ReLost.PlayerInventory.Items
         public void ByRaritySorter()
         {
 
-            for (int i = 0; i < rarityListReference.rarityList.Length; i++)
+            var itemSlotsSortedByRarity = new ItemSlot[itemSlots.Length];
+            var itemSlotsSortedByRarityAndType = new ItemSlot[itemSlots.Length];
+            var item = new List<ItemSlot>();
+            int lastIndex = 0;
+
+            for (int i = 0; i < itemSlots.Length; i++)
             {
                 for (int j = 0; j < itemSlots.Length; j++)
                 {
-                    if (itemSlots[j].item == null)
+                    if (i == j) { continue; }
+                    if (itemSlots[i].item == null || itemSlots[j].item == null) { continue; }
+                    if (itemSlots[i].item == itemSlots[j].item)
                     {
-                        continue;
+                        this.AddItem(itemSlots[j]);
+                        this.RemoveItem(itemSlots[j]);
                     }
-                    if (itemSlots[j].item.Rarity.Name == rarityListReference.rarityList[i].Name)
+                }
+            }
+
+            itemSlots = itemSlots.OrderBy(itemSlots => itemSlots).ToArray();
+
+
+            for (int i = 0; i < rarityListReference.rarityList.Length; i++)
+            {
+                for(int m = 0; m < 10; m++)
+                {
+                    for (int n = 0; n < 10; n++)
                     {
-                        for (int k = 0; k < itemSlots.Length; k++)
+                        for (int j = 0; j < itemSlots.Length; j++)
                         {
-                            if (itemSlotsSortedByRarity[k].item == null)
+                            if (itemSlots[j].item == null)
                             {
-                                itemSlotsSortedByRarity[k] = itemSlots[j];
-                                break;
+                                continue;
+                            }
+                            if (itemSlots[j].item.Rarity.Name == rarityListReference.rarityList[i].Name && itemSlots[j].item.ItemType == m && itemSlots[j].item.ItemSubType == n)
+                            {
+                                for (int k = 0; k < itemSlots.Length; k++)
+                                {
+                                    if (itemSlotsSortedByRarity[k].item == null)
+                                    {
+                                        itemSlotsSortedByRarity[k] = itemSlots[j];
+                                        break;
+                                    }
+                                }
                             }
                         }
                     }
+                        
                 }
-
             }
-
-            itemSlotsSortedByRarity = itemSlotsSortedByRarity.OrderBy(name => this.name).ToArray<ItemSlot>();
 
             ClearInventory();
 
@@ -283,7 +315,6 @@ namespace ReLost.PlayerInventory.Items
                 if (itemSlotsSortedByRarity[i].item != null)
                 {
                     itemSlots[i] = itemSlotsSortedByRarity[i];
-                    itemSlotsSortedByRarity[i].item = null;
                 }
             }
 

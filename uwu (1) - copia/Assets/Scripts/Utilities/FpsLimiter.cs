@@ -1,17 +1,36 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class FpsLimiter : MonoBehaviour
 {
-    [SerializeField] private int frameRate = 80;
+    public int desiredFPS = 60;
 
-    private void Awake()
+    void Awake()
     {
-        StartCoroutine(changeFramerate());
+        Application.targetFrameRate = -1;
+        QualitySettings.vSyncCount = 0;
     }
-    IEnumerator changeFramerate()
+
+    void Update()
     {
-        yield return new WaitForSeconds(1);
-        Application.targetFrameRate = frameRate;
+        long lastTicks = DateTime.Now.Ticks;
+        long currentTicks = lastTicks;
+        float delay = 1f / desiredFPS;
+        float elapsedTime;
+
+        if (desiredFPS <= 0)
+            return;
+
+        while (true)
+        {
+            currentTicks = DateTime.Now.Ticks;
+            elapsedTime = (float)TimeSpan.FromTicks(currentTicks - lastTicks).TotalSeconds;
+            if (elapsedTime >= delay)
+            {
+                break;
+            }
+        }
     }
 }
+

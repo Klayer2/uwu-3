@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: RarityList
   m_EditorClassIdentifier: 
   rarityList:
+  - {fileID: 11400000, guid: 5e798fe5d73fe024bb1812c0dd2916e0, type: 2}
   - {fileID: 11400000, guid: d79b5949bd68ce84489191fee9685d99, type: 2}
   - {fileID: 11400000, guid: f340a165a1d712d499329fa6cf5e96f1, type: 2}

@@ -1,6 +1,7 @@
 using ReLost.PlayerInventory.Items.Hotbars;
 using System.Text;
 using UnityEngine;
+using System.Linq;
 
 namespace ReLost.PlayerInventory.Items
 {
@@ -17,6 +18,7 @@ namespace ReLost.PlayerInventory.Items
         [SerializeField] private bool isUsableInfinitely = false;
         [Header("1 = Miscellaneous, 2 = Consumable")]
         [SerializeField] private int itemType = 0;
+        [SerializeField] private int itemSubType = 0;
         [SerializeField] private string useText = "Does something, Maybe?";
         public override string ColouredName
         {
@@ -29,6 +31,7 @@ namespace ReLost.PlayerInventory.Items
         public int SellPrice => sellPrice;
 
         public int ItemType => itemType;
+        public int ItemSubType => itemSubType;
 
         public int BuyPrice => buyPrice;
 

@@ -14,11 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SimpleSelectedItems:
     m_Keys:
-    - Assets/Scripts/NPC/Occupations/Vendors/VendorSystem.cs
+    - Assets/GameData/Rarity/Legendary.asset
+    - Assets/GameData/Rarity/Legendary.asset.meta
+    - Assets/Resources/Items/Consumables/Aab.asset
+    - Assets/Resources/Items/Consumables/Aab.asset.meta
+    - Assets/Resources/Items/Miscellaneous/Arbol.asset
+    - Assets/Resources/Items/Miscellaneous/Arbol.asset.meta
+    - Assets/Resources/Items/Miscellaneous/Item 1.asset
+    - Assets/Resources/Items/Miscellaneous/Item 1.asset.meta
+    - Assets/Scripts/Inventory/Inventories/Inventory.cs
+    - Assets/Scripts/Inventory/Inventories/InventoryItem.cs
+    - Assets/Scripts/Inventory/Inventories/ItemSlot.cs
+    - Assets/Scripts/NPC/Occupations/Vendors/VendorData.cs
+    - Assets/Scripts/Utilities/FpsLimiter.cs
     - 
-    m_Values: 0101
+    m_Values: 0000000000000000000000000000
   RevisionSummary: 
   ChangesSearchValue: 
-  SelectedHistoryRevision: 9c18d8f5da2e0b4e3f6edfa5daa0c9a0c29c5793
+  SelectedHistoryRevision: 
   HistoryPageNumber: 0
   TabIndex: 0
