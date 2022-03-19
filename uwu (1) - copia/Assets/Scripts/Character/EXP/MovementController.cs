@@ -16,6 +16,7 @@ namespace ReLost.Movement
         private CharacterController controller = null;
         private Animator animator = null;
         private Transform mainCameraTransform = null;
+        private GameObject inventoryInterface;
 
         private float velocityY = 0f;
 
@@ -24,6 +25,7 @@ namespace ReLost.Movement
         private float currentSpeed = 0f;
         private void Awake()
         {
+            inventoryInterface = GameObject.Find("-----------UI-------------").transform.GetChild(0).gameObject;
             controller = GetComponent<CharacterController>();
             animator = GetComponent<Animator>();
             mainCameraTransform = Camera.main.transform;
@@ -38,6 +40,7 @@ namespace ReLost.Movement
 
         private void Move()
         {
+            if (inventoryInterface.activeInHierarchy == true) { return; }
             Vector2 movementInput = new Vector2(
                 Input.GetAxisRaw("Horizontal"),
                 Input.GetAxisRaw("Vertical")

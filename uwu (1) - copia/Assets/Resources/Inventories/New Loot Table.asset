@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4be0a566c89a1446ab965f479c9a7c8, type: 3}
+  m_Name: New Loot Table
+  m_EditorClassIdentifier: 
+  itemDrops:
+  - itemObject: {fileID: 11400000, guid: 0770628b0ecd09c4b83505ddc27f15f5, type: 2}
+    chanceOutOfOne: 1
+    maxAmountToBeDropped: 5
+  - itemObject: {fileID: 11400000, guid: 513c93472f110f3448ff9ad8286c8131, type: 2}
+    chanceOutOfOne: 1
+    maxAmountToBeDropped: 5
+  - itemObject: {fileID: 11400000, guid: bbe4ffb2117b8c646a0f95c215a700f4, type: 2}
+    chanceOutOfOne: 0.5
+    maxAmountToBeDropped: 5
+  - itemObject: {fileID: 0}
+    chanceOutOfOne: 0
+    maxAmountToBeDropped: 1
+  - itemObject: {fileID: 0}
+    chanceOutOfOne: 0
+    maxAmountToBeDropped: 1
+  - itemObject: {fileID: 0}
+    chanceOutOfOne: 0
+    maxAmountToBeDropped: 1
+  - itemObject: {fileID: 0}
+    chanceOutOfOne: 0
+    maxAmountToBeDropped: 1
+  - itemObject: {fileID: 0}
+    chanceOutOfOne: 0
+    maxAmountToBeDropped: 1
+  minMoney: 50
+  maxMoney: 5000

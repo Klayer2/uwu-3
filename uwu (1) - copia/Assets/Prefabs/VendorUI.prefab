@@ -4148,13 +4148,14 @@ MonoBehaviour:
   thisItem:
     item: {fileID: 0}
     quantity: 0
+    id: 0
   quantityToBuyOrSell: {fileID: 1581943766}
   confirmationVendorTitle: {fileID: 343209835}
   confirmationVendorText: {fileID: 1608381571}
   vendorSystem: {fileID: 1715523346367310681}
   confirmationVendorGameObject: {fileID: 333662384}
   isPlayerInventorySelling: 0
-  playerInventory: {fileID: 0}
+  playerInventoryHolder: {fileID: 0}
 --- !u!1 &5422925381068165857
 GameObject:
   m_ObjectHideFlags: 0

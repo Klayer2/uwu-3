@@ -1,3 +1,4 @@
+using ReLost.Inventory.Items;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,12 +7,16 @@ namespace ReLost.Interactables
     public class ObjectInteractor : MonoBehaviour
     {
         private IInteractable currentInteractable = null;
-        private List<IInteractable> objectsToInteract;
-        private List<Transform> objectsToInteractGameObject;
+        public List<IInteractable> objectsToInteract;
+        public List<Transform> objectsToInteractGameObject;
         public int availableObjects = 0;
+        private ReferenceHolder referenceHolder;
+        private GameObject inventoryInterface;
 
         private void Awake()
         {
+            inventoryInterface = GameObject.Find("-----------UI-------------").transform.GetChild(0).gameObject;
+            referenceHolder = FindObjectOfType<ReferenceHolder>();
             objectsToInteract = new List<IInteractable>();
             objectsToInteractGameObject = new List<Transform>();
         }
@@ -25,16 +30,35 @@ namespace ReLost.Interactables
         {
             if (Input.GetButtonDown("Interact"))
             {
+                if(inventoryInterface.activeInHierarchy == true) { return; }
                 if(objectsToInteract.Count >= 1)
                 {
 
     #pragma warning disable CS0162
-                    for(int i = objectsToInteract.Count - 1; i < objectsToInteract.Count; i--)
+                    for(int i = 0; i < objectsToInteract.Count; i++)
     #pragma warning restore CS0162
                     {
-                        objectsToInteract[i].Interact(transform.root.gameObject);
-                        objectsToInteract.RemoveAt(i);
-                        objectsToInteractGameObject.RemoveAt(i);
+                        var objectToInteract = objectsToInteract[i];
+                        var objectToInteractTransform = objectsToInteractGameObject[i];
+                        if (referenceHolder.pickUpDynamicInterface.transform.parent.gameObject.activeInHierarchy == false && objectToInteractTransform.gameObject.GetComponent<ItemPickup>() == true)
+                        {
+                            objectToInteract.Interact(transform.root.gameObject);
+                            break;
+                        }
+                        else
+                        {
+                            objectToInteract.Interact(transform.root.gameObject);
+                            referenceHolder.hoverPopUpInfo.HideInfo(); 
+                        }
+                        if (objectsToInteract.Count == 0)
+                        {
+                            objectsToInteract.Clear();
+                            objectsToInteractGameObject.Clear();
+                            availableObjects = objectsToInteract.Count;
+                            break;
+                        }
+                        objectsToInteract.Remove(objectToInteract);
+                        objectsToInteractGameObject.Remove(objectToInteractTransform);
                         availableObjects = objectsToInteract.Count;
                         break;
                         
@@ -69,7 +93,11 @@ namespace ReLost.Interactables
 
             var interactable = other.GetComponent<IInteractable>();
             var interactableObject = other.GetComponent<Transform>();
-
+            var interactablePickUp = interactableObject.gameObject.GetComponent<ItemPickup>();
+            if (interactablePickUp == referenceHolder.pickUpDynamicInterface.itemPickUp)
+            {
+                referenceHolder.pickUpDynamicInterface.transform.parent.gameObject.SetActive(false);
+            }
 
             if (interactable == null)
             {

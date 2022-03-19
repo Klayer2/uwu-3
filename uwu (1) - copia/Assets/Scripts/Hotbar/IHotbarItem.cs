@@ -1,13 +1,13 @@
 using UnityEngine;
 
-namespace ReLost.PlayerInventory.Items.Hotbars
+namespace ReLost.Inventory.Items.Hotbars
 {
     public interface IHotbarItem
     {
 
         string Name { get; }
 
-        Sprite Icon { get; }
+        Sprite UiDisplay { get; }
 
         void Use();
 

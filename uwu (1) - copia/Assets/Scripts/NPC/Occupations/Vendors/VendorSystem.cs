@@ -1,4 +1,4 @@
-using ReLost.PlayerInventory.Items;
+using ReLost.Inventory.Items;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -14,15 +14,16 @@ namespace ReLost.NPCs.Occupations.Vendors
         [SerializeField] private Transform buttonHolderTransform = null;
         [SerializeField] private RarityList rarityListReference;
         [SerializeField] private TMP_InputField VendorItemSearchText = null;
-        [SerializeField] private ItemTypeList itemTypeListReference = null;
         private VendorData scenarioData = null;
-        private List<InventoryItem> itemsSorted;
+        private List<Item> itemsSorted;
+        private int itemTypeEnumCount = ItemType.GetNames(typeof(ItemType)).Length;
         private int itemType = 0;
+        private bool isEveryItemEmpty;
         public VendorData ScenarioData => scenarioData;
 
         private void Start()
         {
-            itemsSorted = new List<InventoryItem>();
+            itemsSorted = new List<Item>();
             pooledVendorButton = new List<GameObject>();
         }
 
@@ -35,6 +36,7 @@ namespace ReLost.NPCs.Occupations.Vendors
 
         public void SetCurrentContainer(bool isBuying)
         {
+            isEveryItemEmpty = true;
             ClearItemButtons();
             scenarioData.IsFirstContainerBuying = isBuying;
             var items = scenarioData.SellingItemContainer.GetAllUniqueItems();
@@ -53,28 +55,55 @@ namespace ReLost.NPCs.Occupations.Vendors
             //        }
             //    }
             //}
-
-            for (int i = 0; i < rarityListReference.rarityList.Length; i++)
+            for(int i = 0; i < items.Count; i++)
             {
-                for (int m = 0; m < itemTypeListReference.ItemType.Length; m++)
+                if (!isEveryItemEmpty) { continue; }
+                if (items[i] == null) { continue; }
+                if (items[i].Id >= 0) { isEveryItemEmpty = false; }
+            }
+
+            if (!isEveryItemEmpty)
+            {
+                for (int i = 0; i < rarityListReference.rarityList.Length; i++)
                 {
-                    for (int n = 0; n < itemTypeListReference.ItemSubType.Length; n++)
+                    for (int m = 0; m < itemTypeEnumCount; m++)
                     {
                         for (int j = 0; j < items.Count; j++)
                         {
-                            if (items[j] == null)
+                            if (items[j] == null || items[j].rarity == null)
                             {
                                 continue;
                             }
-                            if (items[j].Rarity.Name == rarityListReference.rarityList[i].Name && items[j].ItemType == itemTypeListReference.ItemType[m] && items[j].ItemSubType == itemTypeListReference.ItemSubType[n])
+                            if (items[j].rarity.name == rarityListReference.rarityList[i].name && items[j].itemTypeID == m)
                             {
                                 itemsSorted.Add(items[j]);
                             }
                         }
                     }
+                }
 
+                do
+                {
+                    if (amountToPool > itemsSorted.Count)
+                    {
+                        break;
+                    }
+                    if (amountToPool <= itemsSorted.Count)
+                    {
+                        amountToPool++;
+                    }
+                    GameObject buttonInstance = Instantiate(buttonPrefab, buttonHolderTransform);
+                    pooledVendorButton.Add(buttonInstance);
+                } while (amountToPool <= itemsSorted.Count);
+
+                for (int i = 0; i < itemsSorted.Count; i++)
+                {
+                    if(itemsSorted[i] == null) { continue; }
+                    pooledVendorButton[i].GetComponent<VendorItemButton>().Initialise(this, itemsSorted[i], scenarioData.SellingItemContainer.GetTotalQuantity(itemsSorted[i]), scenarioData);
+                    pooledVendorButton[i].SetActive(true);
                 }
             }
+                
             //for (int i = 0; i < itemsSorted.Length; i++)
             //{
             //    if (itemsSorted[i].item != null)
@@ -84,25 +113,7 @@ namespace ReLost.NPCs.Occupations.Vendors
             //    }
             //}
 
-            do
-            {
-                if (amountToPool > itemsSorted.Count)
-                {
-                    break;
-                }
-                if (amountToPool <= itemsSorted.Count)
-                {
-                    amountToPool++;
-                }
-                GameObject buttonInstance = Instantiate(buttonPrefab, buttonHolderTransform);
-                pooledVendorButton.Add(buttonInstance);
-            } while (amountToPool <= itemsSorted.Count);
-
-            for (int i = 0; i < itemsSorted.Count; i++)
-            {
-                pooledVendorButton[i].GetComponent<VendorItemButton>().Initialise(this, itemsSorted[i], scenarioData.SellingItemContainer.GetTotalQuantity(itemsSorted[i]), scenarioData);
-                pooledVendorButton[i].SetActive(true);
-            }
+            
         }
 
         private void ClearItemButtons()
@@ -123,12 +134,12 @@ namespace ReLost.NPCs.Occupations.Vendors
                 if (VendorItemSearchText.text == "") { pooledVendorButton[i].gameObject.SetActive(true); continue; }
                 if (itemsSorted[i] == null) { continue; }
 
-                if (itemsSorted[i].name.ToLower().Contains(vendorItemSearchText))
+                if (itemsSorted[i].Name.ToLower().Contains(vendorItemSearchText))
                 {
                     pooledVendorButton[i].gameObject.SetActive(true);
                 }
                 else
-                if (itemsSorted[i].Rarity.Name.ToLower() == vendorItemSearchText)
+                if (itemsSorted[i].rarity.name.ToLower() == vendorItemSearchText)
                 {
                     pooledVendorButton[i].gameObject.SetActive(true);
                 }
@@ -141,31 +152,25 @@ namespace ReLost.NPCs.Occupations.Vendors
 
         public void SortByItemType(int type)
         {
-            itemType = type;
+            for (int i = 0; i < itemsSorted.Count; i++)
+            {
+                if (itemType == 100) { pooledVendorButton[i].gameObject.SetActive(true); continue; }
+                if (itemsSorted[i] == null) { continue; }
+
+                if (itemsSorted[i].itemTypeID == itemType)
+                {
+                    pooledVendorButton[i].gameObject.SetActive(true);
+                    continue;
+                }
+
+                pooledVendorButton[i].gameObject.SetActive(false);
+
+            }
         }
 
         public void SortByItemSubType(int subType)
         {
-            for (int i = 0; i < itemsSorted.Count; i++)
-            {
-                if (itemType == 0) { pooledVendorButton[i].gameObject.SetActive(true); continue; }
-                if (itemsSorted[i] == null) { continue; }
-
-                if (subType == 0 && itemsSorted[i].ItemType == itemType)
-                {
-                    pooledVendorButton[i].gameObject.SetActive(true);
-                    continue;
-                }
-
-                if (itemsSorted[i].ItemSubType == subType && itemsSorted[i].ItemType == itemType)
-                {
-                    pooledVendorButton[i].gameObject.SetActive(true);
-                    continue;
-                }
-
-                    pooledVendorButton[i].gameObject.SetActive(false);
-
-            }
+            
 
         }
     }

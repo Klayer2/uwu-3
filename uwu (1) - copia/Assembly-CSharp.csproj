@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,15 +53,23 @@
     <UnityVersion>2021.2.7f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\Scripts\Hotbar\IHotbarItem.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Items\PickUpDynamicInterface.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Listeners\VendorDataListener.cs" />
     <Compile Include="Assets\Scripts\Character\Ability.cs" />
-    <Compile Include="Assets\Scripts\Inventory\Inventories\InventorySlot.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Items\ItemLootTable.cs" />
     <Compile Include="Assets\Scripts\Utilities\MaxWidth.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Void.cs" />
     <Compile Include="Assets\Scripts\EventSystem\UnityEvents\UnityNpcEvent.cs" />
+    <Compile Include="Assets\Scripts\Character\BoneCombiner.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Items\ItemTypes\EquipmentItem.cs" />
     <Compile Include="Assets\Scripts\EventSystem\UnityEvents\UnityFloatEvent.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Items\ItemTypes\TrashItem.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Events\BoolEvent.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Inventories\InventoryHolder.cs" />
     <Compile Include="Assets\Scripts\Inventory\Inventories\IItemContainer.cs" />
     <Compile Include="Assets\Scripts\NPC\Occupations\Vendors\VendorItemButton.cs" />
     <Compile Include="Assets\Scripts\Inventory\Items\ItemDragHandler.cs" />
@@ -69,23 +77,29 @@
     <Compile Include="Assets\Scripts\EventSystem\Events\NpcEvent.cs" />
     <Compile Include="Assets\Scripts\Utilities\FpsLimiter.cs" />
     <Compile Include="Assets\MoneySetter.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Inventories\DisplayInventorySorted.cs" />
     <Compile Include="Assets\Scripts\Inventory\Inventories\DisplayInventorySystem.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Listeners\IntListener.cs" />
     <Compile Include="Assets\Scripts\NPC\Occupations\Vendors\VendorSystem.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Inventories\ModifiableInt.cs" />
     <Compile Include="Assets\Scripts\NPC\Occupations\OccupationButton.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Events\ItemContainerEvent .cs" />
+    <Compile Include="Assets\Scripts\Inventory\Items\DynamicInterface.cs" />
     <Compile Include="Assets\Scripts\Character\PlayerFollow.cs" />
     <Compile Include="Assets\Scripts\Inventory\Items\Item.cs" />
-    <Compile Include="Assets\Scripts\Inventory\Inventories\Inventory.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Items\UserInterface.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Events\IntEvent.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Events\AbilityEvent.cs" />
     <Compile Include="Assets\Scripts\Inventory\Inventories\ItemTypeList.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Listeners\BaseGameEventListener.cs" />
     <Compile Include="Assets\Scripts\EventSystem\UnityEvents\UnityItemContainerEvent.cs" />
     <Compile Include="Assets\Scripts\EventSystem\UnityEvents\UnityAbilityEvent.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Inventories\IModifier.cs" />
     <Compile Include="Assets\Scripts\Utilities\MaxWidthText.cs" />
+    <Compile Include="Assets\InventoryUISetter.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Listeners\AbilityListener.cs" />
     <Compile Include="Assets\Scripts\Character\HotkeyAbilitySystem.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Items\ItemTypes\ConsumableItem.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Events\VendorDataEvent.cs" />
     <Compile Include="Assets\Scripts\EventSystem\UnityEvents\UnityItemEvent.cs" />
     <Compile Include="Assets\Scripts\NPC\Occupations\Vendors\VendorItemUI.cs" />
@@ -97,30 +111,38 @@
     <Compile Include="Assets\Scripts\Inventory\Inventories\HoverPopUpInfo.cs" />
     <Compile Include="Assets\Scripts\EventSystem\UnityEvents\UnityVoidEvent.cs" />
     <Compile Include="Assets\Scripts\Skills\Active\Magic\Spell.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Items\InventoryItemDataBase.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Listeners\IGameEventListener.cs" />
     <Compile Include="Assets\Scripts\Inventory\Inventories\ItemSlot.cs" />
     <Compile Include="Assets\Scripts\NPC\Occupations\IOccupation.cs" />
+    <Compile Include="Assets\SlotIndex.cs" />
+    <Compile Include="Assets\Scripts\Character\Player.cs" />
     <Compile Include="Assets\Scripts\Inventory\Items\ItemPickup.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Inventories\InventoryObject.cs" />
     <Compile Include="Assets\Scripts\Utilities\RightClickeableObject.cs" />
     <Compile Include="Assets\Scripts\Character\Gravity.cs" />
     <Compile Include="Assets\Scripts\Hotbar\HotbarItemDragHandler.cs" />
     <Compile Include="Assets\Scripts\Character\EXP\MovementController.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Listeners\FloatListener.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Inventories\ItemObject.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Events\FloatEvent.cs" />
     <Compile Include="Assets\Scripts\EventSystem\UnityEvents\UnityVendorDataEvent.cs" />
     <Compile Include="Assets\Scripts\NPC\Occupations\Vendors\Vendor.cs" />
     <Compile Include="Assets\Scripts\NPC\Occupations\Vendors\SetBuyQuantityLocation.cs" />
-    <Compile Include="Assets\Scripts\Inventory\Inventories\InventoryItem.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Listeners\ItemListener.cs" />
     <Compile Include="Assets\Scripts\NPC\Occupations\Vendors\BuySellQuantity.cs" />
     <Compile Include="Assets\Scripts\Character\CameraZoom.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Events\BaseGameEvent.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Items\ItemTypes\MiscellaneousItem.cs" />
     <Compile Include="Assets\Scripts\EventSystem\UnityEvents\UnityBoolEvent.cs" />
     <Compile Include="Assets\Scripts\Inventory\Inventories\InventoryItemDragHandler.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Listeners\BoolListener.cs" />
     <Compile Include="Assets\Scripts\NPC\Occupations\Vendors\VendorItemHoverHandler.cs" />
+    <Compile Include="Assets\Scripts\Utilities\MaxWidthResizeable.cs" />
     <Compile Include="Assets\ReferenceHolder.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Items\StaticInterface.cs" />
     <Compile Include="Assets\Scripts\NPC\NpcCanvasFind.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Inventories\InventorySlotUI.cs" />
     <Compile Include="Assets\Scripts\EventSystem\UnityEvents\UnityIntEvent.cs" />
     <Compile Include="Assets\Scripts\Hotbar\HotbarSlot.cs" />
     <Compile Include="Assets\Scripts\EventSystem\Listeners\NpcListener.cs" />
@@ -133,12 +155,14 @@
     <Compile Include="Assets\Scripts\NPC\Npc.cs" />
     <Compile Include="Assets\Scripts\Character\CameraAxisDisabler.cs" />
     <Compile Include="Assets\Scripts\GeneralTooltip\GeneralTooltip.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Items\PickUpUserInterface.cs" />
     <Compile Include="Assets\Scripts\Interactables\IInteractable.cs" />
     <Compile Include="Assets\Scripts\Inventory\Experimental\RarityList.cs" />
     <Compile Include="Assets\Scripts\Utilities\AxisToButtonDisabler.cs" />
     <Compile Include="Assets\Scripts\Inventory\Experimental\Rarity.cs" />
     <Compile Include="Assets\Scripts\Utilities\AxisToButton.cs" />
     <Compile Include="Assets\Scripts\GeneralTooltip\GeneralTooltipSystem.cs" />
+    <Compile Include="Assets\Resources\Inventories\InventoryIDResetter.cs" />
     <Compile Include="Assets\Scripts\Utilities\ToogleActiveWithKeyPress.cs" />
     <Compile Include="Assets\Scripts\Hotbar\Hotbar.cs" />
     <Compile Include="Assets\Scripts\Utilities\ActivateOnStart.cs" />
@@ -147,7 +171,6 @@
     <Compile Include="Assets\Scripts\Inventory\Inventories\ItemSlotUI.cs" />
     <Compile Include="Assets\Scripts\Utilities\MaxWidthHorizontalLayoutGroup.cs" />
     <Compile Include="Assets\Scripts\NPC\Occupations\Vendors\VendorData.cs" />
-    <Compile Include="Assets\Scripts\Character\PlayerMainScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

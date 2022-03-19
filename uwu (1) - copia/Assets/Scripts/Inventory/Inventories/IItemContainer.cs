@@ -1,20 +1,19 @@
 using System.Collections.Generic;
 using TMPro;
 
-namespace ReLost.PlayerInventory.Items
+namespace ReLost.Inventory.Items
 {
     public interface IItemContainer
     {
-        int Money { get; set; }
-        ItemSlot GetSlotByIndex(int index);
-        ItemSlot AddItem(ItemSlot itemSlot);
-        List<InventoryItem> GetAllUniqueItems();
-        void RemoveItem(ItemSlot itemSlot);
+        InventorySlot GetSlotByIndex(int index);
+        int AddItem(Item _item, int _amount);
+        List<Item> GetAllUniqueItems();
+        void RemoveItem(Item _item, int _amount);
         //void RemoveAt(int slotIndex);
         void Swap(int indexOne, int indexTwo, TextMeshProUGUI inputTextField);
-        bool HasItem(InventoryItem item);
-        int GetTotalQuantity(InventoryItem item);
+        bool HasItem(Item item);
+        int GetTotalQuantity(Item item);
         void ByRaritySorter();
-        void ClearInventory();
+        void EmptyInventory();
     }
 }

@@ -1,105 +1,118 @@
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace ReLost.PlayerInventory.Items.Hotbars
+namespace ReLost.Inventory.Items.Hotbars
 {
-    public class HotbarSlot : ItemSlotUI, IDropHandler
-    {
-        [SerializeField] private Inventory inventory = null;
-        [SerializeField] private TextMeshProUGUI itemQuantityText = null;
+//    public class HotbarSlot : ItemSlotUI, IDropHandler
+//    {
+//        [SerializeField] private InventoryObject inventory = null;
+//        [SerializeField] private TextMeshProUGUI itemQuantityText = null;
+//        private InventoryItemDataBase dataBase;
 
-        private Item slotItem = null;
+//        private Item slotItem = null;
 
-        public override Item SlotItem 
-        { 
-            get { return slotItem; }
-            set { slotItem = value; UpdateSlotUI(); }
-        }
+//        private void Awake()
+//        {
 
-        public bool AddItem(Item itemToAdd)
-        {
-            if(SlotItem != null) { return false; }
+//#if UNITY_EDITOR
+//            dataBase = (InventoryItemDataBase)AssetDatabase.LoadAssetAtPath("Assets/Resources/Items/DataBase/Item Database.asset", typeof(InventoryItemDataBase));
+//#else
+//            dataBase = Resources.Load<InventoryItemDataBase>("Items/DataBase/Item Database");
+//#endif
+//        }
 
-            SlotItem = itemToAdd;
+//        public override Item SlotItem 
+//        { 
+//            get { return slotItem; }
+//            set { slotItem = value; UpdateSlotUI(); }
+//        }
 
-            return true;
-        }
+//        public bool AddItem(Item itemToAdd)
+//        {
+//            if(SlotItem != null) { return false; }
 
-        public void UseSlot(int index)
-        {
-            if (index != SlotIndex) { return; }
+//            SlotItem = itemToAdd;
 
-            //use item
-        }
+//            return true;
+//        }
 
-        public override void OnDrop(PointerEventData eventData)
-        {
-            ItemDragHandler itemDragHandler = eventData.pointerDrag.GetComponent<ItemDragHandler>();
+//        public void UseSlot(int index)
+//        {
+//            if (index != SlotIndex) { return; }
 
-            if(itemDragHandler == null) { return; }
+//            //use item
+//        }
 
-            InventorySlot inventorySlot = itemDragHandler.ItemSlotUI as InventorySlot;
+//        public override void OnDrop(PointerEventData eventData)
+//        {
+//            ItemDragHandler itemDragHandler = eventData.pointerDrag.GetComponent<ItemDragHandler>();
 
-            if(inventorySlot != null)
-            {
-                SlotItem = inventorySlot.ItemSlot.item;
-            }
+//            if(itemDragHandler == null) { return; }
 
-            HotbarSlot hotbarSlot = itemDragHandler.ItemSlotUI as HotbarSlot;
+//            InventorySlotUI inventorySlot = itemDragHandler.ItemSlotUI as InventorySlotUI;
 
-            if(hotbarSlot!= null)
-            {
-                Item oldItem = SlotItem;
-                SlotItem = hotbarSlot.SlotItem;
-                hotbarSlot.SlotItem = oldItem;
-                return;
-            }
-        }
+//            if(inventorySlot != null)
+//            {
+//                SlotItem = inventorySlot.ItemSlot.item;
+//            }
 
-        public override void UpdateSlotUI()
-        {
-            if(SlotItem == null)
-            {
-                EnableSlotUI(false);
-                return;
+//            HotbarSlot hotbarSlot = itemDragHandler.ItemSlotUI as HotbarSlot;
 
-            }
+//            if(hotbarSlot!= null)
+//            {
+//                Item oldItem = SlotItem;
+//                SlotItem = hotbarSlot.SlotItem;
+//                hotbarSlot.SlotItem = oldItem;
+//                return;
+//            }
+//        }
 
-            itemIconImage.sprite = SlotItem.Icon;
+//        public override void UpdateSlotUI()
+//        {
+//            if(SlotItem == null)
+//            {
+//                EnableSlotUI(false);
+//                return;
 
-            EnableSlotUI(true);
+//            }
 
-            SetItemQuantityUI();
-        }
+//            itemIconImage.sprite = inventory.inventoryItemDataBase.ItemObjects[SlotItem.Id].UiDisplay;
+//            itemIconBelowImage.sprite = inventory.inventoryItemDataBase.ItemObjects[SlotItem.Id].UiDisplay;
 
-        private void SetItemQuantityUI()
-        {
-            if(SlotItem is InventoryItem inventoryItem)
-            {
-                if (inventory.HasItem(inventoryItem))
-                {
-                    int quantityCount = inventory.GetTotalQuantity(inventoryItem);
-                    itemQuantityText.text = quantityCount > 1 || inventoryItem.MaxStack > 1 ? quantityCount.ToString() : "";
-                }
-                else
-                {
-                    SlotItem = null;
-                }
-            }
-            else
-            {
-                itemQuantityText.enabled = false;
-            }
-        }
+//            EnableSlotUI(true);
 
-        protected override void EnableSlotUI(bool enable)
-        {
-            base.EnableSlotUI(enable);
-            itemQuantityText.enabled = enable;
-        }
+//            SetItemQuantityUI();
+//        }
+
+//        private void SetItemQuantityUI()
+//        {
+//            if(SlotItem is Item inventoryItem)
+//            {
+//                if (inventory.HasItem(inventoryItem))
+//                {
+//                    int quantityCount = inventory.GetTotalQuantity(inventoryItem);
+//                    itemQuantityText.text = quantityCount > 1 || dataBase.ItemObjects[inventoryItem.Id].maxStack > 1 ? quantityCount.ToString() : "";
+//                }
+//                else
+//                {
+//                    SlotItem = null;
+//                }
+//            }
+//            else
+//            {
+//                itemQuantityText.enabled = false;
+//            }
+//        }
+
+//        protected override void EnableSlotUI(bool enable)
+//        {
+//            base.EnableSlotUI(enable);
+//            itemQuantityText.enabled = enable;
+//        }
 
 
-    }
+//    }
 
 }

@@ -1,0 +1,297 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eea8b866c14f1a74abefb654ceaf3a52, type: 3}
+  m_Name: Vendor
+  m_EditorClassIdentifier: 
+  savePath: /vendo2r.save
+  rarityListReference: {fileID: 11400000, guid: acb38a34f30e95449ab752356d906d1f, type: 2}
+  inventoryItemDataBase: {fileID: 11400000, guid: 0a562ba18a33d4d40ac08e890e42586d, type: 2}
+  itemTypeEnumCount: 8
+  type: 0
+  itemToAddInEditor: {fileID: 11400000, guid: bbe4ffb2117b8c646a0f95c215a700f4, type: 2}
+  amountToAddInEditor: 2
+  maxSlotsAmount: 0
+  container:
+    itemSlots:
+    - AllowedItems: 
+      parent: {fileID: 0}
+      pickUpParent: {fileID: 0}
+      item:
+        Id: 2
+        rarity: {fileID: 11400000, guid: d79b5949bd68ce84489191fee9685d99, type: 2}
+        Name: Uso
+        useText: Does something, Maybe?
+        uiDisplay: {fileID: 21300000, guid: af0e186932b9b8a4091a3d13b353c403, type: 3}
+        buffs: []
+        canBeBoughtInfinitely: 0
+        isUsableInfinitely: 0
+        itemTypeID: 0
+        itemSubTypeID: 0
+      index: 0
+      amount: 2
+    - AllowedItems: 
+      parent: {fileID: 0}
+      pickUpParent: {fileID: 0}
+      item:
+        Id: 0
+        rarity: {fileID: 11400000, guid: f340a165a1d712d499329fa6cf5e96f1, type: 2}
+        Name: A
+        useText: Does something, Maybe?
+        uiDisplay: {fileID: 21300000, guid: 58901afb57c98be42bb8126a41e08c8b, type: 3}
+        buffs: []
+        canBeBoughtInfinitely: 0
+        isUsableInfinitely: 0
+        itemTypeID: 0
+        itemSubTypeID: 0
+      index: 0
+      amount: 1
+    - AllowedItems: 
+      parent: {fileID: 0}
+      pickUpParent: {fileID: 0}
+      item:
+        Id: 0
+        rarity: {fileID: 11400000, guid: f340a165a1d712d499329fa6cf5e96f1, type: 2}
+        Name: A
+        useText: Does something, Maybe?
+        uiDisplay: {fileID: 21300000, guid: 58901afb57c98be42bb8126a41e08c8b, type: 3}
+        buffs: []
+        canBeBoughtInfinitely: 0
+        isUsableInfinitely: 0
+        itemTypeID: 0
+        itemSubTypeID: 0
+      index: 0
+      amount: 1
+    - AllowedItems: 
+      parent: {fileID: 0}
+      pickUpParent: {fileID: 0}
+      item:
+        Id: 1
+        rarity: {fileID: 11400000, guid: f340a165a1d712d499329fa6cf5e96f1, type: 2}
+        Name: The Shit
+        useText: 
+        uiDisplay: {fileID: 21300000, guid: 58901afb57c98be42bb8126a41e08c8b, type: 3}
+        buffs:
+        - attribute: 0
+          value: 4
+          min: 1
+          max: 25
+        - attribute: 2
+          value: 22
+          min: 2
+          max: 25
+        canBeBoughtInfinitely: 0
+        isUsableInfinitely: 0
+        itemTypeID: 0
+        itemSubTypeID: 0
+      index: 0
+      amount: 1
+    - AllowedItems: 
+      parent: {fileID: 0}
+      pickUpParent: {fileID: 0}
+      item:
+        Id: 1
+        rarity: {fileID: 11400000, guid: f340a165a1d712d499329fa6cf5e96f1, type: 2}
+        Name: The Shit
+        useText: 
+        uiDisplay: {fileID: 21300000, guid: 58901afb57c98be42bb8126a41e08c8b, type: 3}
+        buffs:
+        - attribute: 0
+          value: 4
+          min: 1
+          max: 25
+        - attribute: 2
+          value: 22
+          min: 2
+          max: 25
+        canBeBoughtInfinitely: 0
+        isUsableInfinitely: 0
+        itemTypeID: 0
+        itemSubTypeID: 0
+      index: 0
+      amount: 1
+    - AllowedItems: 
+      parent: {fileID: 0}
+      pickUpParent: {fileID: 0}
+      item:
+        Id: -1
+        rarity: {fileID: 0}
+        Name: 
+        useText: 
+        uiDisplay: {fileID: 0}
+        buffs: []
+        canBeBoughtInfinitely: 0
+        isUsableInfinitely: 0
+        itemTypeID: 0
+        itemSubTypeID: 0
+      index: 0
+      amount: 0
+    - AllowedItems: 
+      parent: {fileID: 0}
+      pickUpParent: {fileID: 0}
+      item:
+        Id: -1
+        rarity: {fileID: 0}
+        Name: 
+        useText: 
+        uiDisplay: {fileID: 0}
+        buffs: []
+        canBeBoughtInfinitely: 0
+        isUsableInfinitely: 0
+        itemTypeID: 0
+        itemSubTypeID: 0
+      index: 0
+      amount: 0
+    - AllowedItems: 
+      parent: {fileID: 0}
+      pickUpParent: {fileID: 0}
+      item:
+        Id: -1
+        rarity: {fileID: 0}
+        Name: 
+        useText: 
+        uiDisplay: {fileID: 0}
+        buffs: []
+        canBeBoughtInfinitely: 0
+        isUsableInfinitely: 0
+        itemTypeID: 0
+        itemSubTypeID: 0
+      index: 0
+      amount: 0
+    - AllowedItems: 
+      parent: {fileID: 0}
+      pickUpParent: {fileID: 0}
+      item:
+        Id: -1
+        rarity: {fileID: 0}
+        Name: 
+        useText: 
+        uiDisplay: {fileID: 0}
+        buffs: []
+        canBeBoughtInfinitely: 0
+        isUsableInfinitely: 0
+        itemTypeID: 0
+        itemSubTypeID: 0
+      index: 0
+      amount: 0
+    - AllowedItems: 
+      parent: {fileID: 0}
+      pickUpParent: {fileID: 0}
+      item:
+        Id: -1
+        rarity: {fileID: 0}
+        Name: 
+        useText: 
+        uiDisplay: {fileID: 0}
+        buffs: []
+        canBeBoughtInfinitely: 0
+        isUsableInfinitely: 0
+        itemTypeID: 0
+        itemSubTypeID: 0
+      index: 0
+      amount: 0
+    - AllowedItems: 
+      parent: {fileID: 0}
+      pickUpParent: {fileID: 0}
+      item:
+        Id: -1
+        rarity: {fileID: 0}
+        Name: 
+        useText: 
+        uiDisplay: {fileID: 0}
+        buffs: []
+        canBeBoughtInfinitely: 0
+        isUsableInfinitely: 0
+        itemTypeID: 0
+        itemSubTypeID: 0
+      index: 0
+      amount: 0
+    - AllowedItems: 
+      parent: {fileID: 0}
+      pickUpParent: {fileID: 0}
+      item:
+        Id: -1
+        rarity: {fileID: 0}
+        Name: 
+        useText: 
+        uiDisplay: {fileID: 0}
+        buffs: []
+        canBeBoughtInfinitely: 0
+        isUsableInfinitely: 0
+        itemTypeID: 0
+        itemSubTypeID: 0
+      index: 0
+      amount: 0
+    - AllowedItems: 
+      parent: {fileID: 0}
+      pickUpParent: {fileID: 0}
+      item:
+        Id: -1
+        rarity: {fileID: 0}
+        Name: 
+        useText: 
+        uiDisplay: {fileID: 0}
+        buffs: []
+        canBeBoughtInfinitely: 0
+        isUsableInfinitely: 0
+        itemTypeID: 0
+        itemSubTypeID: 0
+      index: 0
+      amount: 0
+    - AllowedItems: 
+      parent: {fileID: 0}
+      pickUpParent: {fileID: 0}
+      item:
+        Id: -1
+        rarity: {fileID: 0}
+        Name: 
+        useText: 
+        uiDisplay: {fileID: 0}
+        buffs: []
+        canBeBoughtInfinitely: 0
+        isUsableInfinitely: 0
+        itemTypeID: 0
+        itemSubTypeID: 0
+      index: 0
+      amount: 0
+    - AllowedItems: 
+      parent: {fileID: 0}
+      pickUpParent: {fileID: 0}
+      item:
+        Id: -1
+        rarity: {fileID: 0}
+        Name: 
+        useText: 
+        uiDisplay: {fileID: 0}
+        buffs: []
+        canBeBoughtInfinitely: 0
+        isUsableInfinitely: 0
+        itemTypeID: 0
+        itemSubTypeID: 0
+      index: 0
+      amount: 0
+    - AllowedItems: 
+      parent: {fileID: 0}
+      pickUpParent: {fileID: 0}
+      item:
+        Id: -1
+        rarity: {fileID: 0}
+        Name: 
+        useText: 
+        uiDisplay: {fileID: 0}
+        buffs: []
+        canBeBoughtInfinitely: 0
+        isUsableInfinitely: 0
+        itemTypeID: 0
+        itemSubTypeID: 0
+      index: 0
+      amount: 0
+    money: 0

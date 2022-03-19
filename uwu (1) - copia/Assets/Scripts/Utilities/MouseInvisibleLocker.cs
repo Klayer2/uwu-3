@@ -2,7 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using ReLost.PlayerNameSpace;
 namespace ReLost.Utilities
 {
 
@@ -17,7 +17,7 @@ namespace ReLost.Utilities
         private void Start()
         {
             camMono = Camera.main.GetComponent<MonoBehaviour>();
-            player = FindObjectOfType<PlayerMainScript>().gameObject;
+            player = FindObjectOfType<Player>().gameObject;
             cameraZoom = player.GetComponent<CameraZoom>();
             vCam = FindObjectOfType<CinemachineFreeLook>();
         }

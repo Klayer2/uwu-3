@@ -1,5 +1,6 @@
 using ReLost.Events;
-using ReLost.PlayerInventory.Items;
+using ReLost.PlayerNameSpace;
+using ReLost.Inventory.Items;
 using UnityEngine;
 
 namespace ReLost.NPCs.Occupations.Vendors
@@ -11,20 +12,20 @@ namespace ReLost.NPCs.Occupations.Vendors
 
         public string Name => "Name";
 
-        private IItemContainer itemContainer = null;
+        [SerializeField] private InventoryHolder itemContainer = null;
 
-        private void Start() => itemContainer = GetComponent<IItemContainer>();
+        private void Start() => itemContainer = GetComponent<InventoryHolder>();
 
         public void Trigger(GameObject other)
         {
-            var otherItemContainer = other.GetComponent<IItemContainer>();
+            var otherItemContainer = other.GetComponent<Player>();
 
             if(otherItemContainer == null)
             {
                 return;
             }
 
-            VendorData vendorData = new VendorData(otherItemContainer, itemContainer);
+            VendorData vendorData = new VendorData(otherItemContainer.inventory, itemContainer.Inventory);
 
             onStartVendorScenario.Raise(vendorData);
 

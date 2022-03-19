@@ -1,17 +1,19 @@
 using System;
 
-namespace ReLost.PlayerInventory.Items
+namespace ReLost.Inventory.Items
 {
     [Serializable]
     public struct ItemSlot : IComparable<ItemSlot>
     {
-        public InventoryItem item;
+        public ItemObject item;
         public int quantity;
+        public int id;
 
-        public ItemSlot(InventoryItem item, int quantity)
+        public ItemSlot(ItemObject item, int quantity, int id)
         {
             this.item = item;
             this.quantity = quantity;
+            this.id = id;
         }
 
         public int CompareTo(ItemSlot obj)

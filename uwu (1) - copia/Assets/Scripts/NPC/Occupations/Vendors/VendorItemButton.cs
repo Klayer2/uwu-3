@@ -1,38 +1,43 @@
 ﻿using ReLost.Events;
-using ReLost.PlayerInventory.Items;
+using ReLost.Inventory.Items;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace ReLost.NPCs.Occupations.Vendors
 {
-    public class VendorItemButton : ItemSlotUI, IPointerDownHandler
+    public class VendorItemButton : VendorItemUI, IPointerDownHandler
     {
         [SerializeField] private TextMeshProUGUI itemNameText = null;
         [SerializeField] private TextMeshProUGUI inventoryItemQuantityText = null;
         [SerializeField] private TextMeshProUGUI thisItemQuantityText = null;
         [SerializeField] private TextMeshProUGUI thisItemPriceText = null;
-        [SerializeField] private Item thisItem = null;
+        //[SerializeField] private Image itemIconImage = null;
+        [SerializeField] private Item thisItem;
         [SerializeField] protected ItemEvent onStartHoveringItem = null;
         [SerializeField] private TMP_InputField quantityToBuyOrSell = null;
         [SerializeField] private GameObject confirmWindow = null;
         [SerializeField] private static ReferenceHolder referencer;
         private BuySellQuantity buySellQuantity = null;
-        [SerializeField] private ItemSlot thisItemToSellOrBuy;
+        [SerializeField] private InventorySlot thisItemToSellOrBuy;
         [SerializeField] private VendorData scenarioData = null;
+        [SerializeField] private InventoryItemDataBase dataBase;
 
-
-        public override Item SlotItem 
+        private void Awake()
         {
-            get 
-            { return thisItem; }
-            set { thisItem = value; UpdateSlotUI(); }
+#if UNITY_EDITOR
+            dataBase = (InventoryItemDataBase)AssetDatabase.LoadAssetAtPath("Assets/Resources/Items/DataBase/Item Database.asset", typeof(InventoryItemDataBase));
+#else
+            dataBase = Resources.Load<InventoryItemDataBase>("Items/DataBase/Item Database");
+#endif
         }
 
-        public void Initialise(VendorSystem vendorSystem, InventoryItem item, int quantity, VendorData vendorData)
+        public void Initialise(VendorSystem vendorSystem, Item item, int quantity, VendorData vendorData)
         {
             thisItemToSellOrBuy.item = item;
-            thisItemToSellOrBuy.quantity = quantity;
+            thisItemToSellOrBuy.amount = quantity;
             scenarioData = vendorData;
             thisItem = item;
             thisItemQuantityText.text = quantity.ToString();
@@ -42,7 +47,7 @@ namespace ReLost.NPCs.Occupations.Vendors
             UpdateSlotUI();
             if (scenarioData.IsFirstContainerBuying)
             {
-                if (item.IsUnlimited) 
+                if (item.canBeBoughtInfinitely) 
                 { 
                     thisItemQuantityText.text = "∞"; 
                 } 
@@ -50,25 +55,33 @@ namespace ReLost.NPCs.Occupations.Vendors
                 {
                     thisItemQuantityText.text = $"{quantity}";
                 }
-                thisItemPriceText.text = $"{item.BuyPrice} <sprite=0>";
+                thisItemPriceText.text = $"{dataBase.ItemObjects[item.Id].buyPrice} <sprite=0>";
             }
             else
             {
                 thisItemQuantityText.text = "";
-                thisItemPriceText.text = $"{item.SellPrice}";
+                thisItemPriceText.text = $"{ dataBase.ItemObjects[item.Id].sellPrice} <sprite=0>";
             }
+        }
+        public override Item SlotItem
+        {
+            get
+            { return thisItem; }
+            set { thisItem = value; UpdateSlotUI(); }
         }
 
         public override void UpdateSlotUI()
         {
-            if (thisItem == null)
+            if (thisItem.Id >= 0)
             {
-                EnableSlotUI(false);
+                itemIconImage.sprite = dataBase.ItemObjects[thisItem.Id].UiDisplay;
+                EnableSlotUI(true);
                 return;
 
             }
 
-            itemIconImage.sprite = thisItem.Icon;
+            itemIconImage.sprite = null;
+
 
             EnableSlotUI(true);
 
@@ -77,7 +90,7 @@ namespace ReLost.NPCs.Occupations.Vendors
 
         protected override void EnableSlotUI(bool enable)
         {
-            base.EnableSlotUI(enable);
+            itemIconImage.enabled = enable;
         }
 
         public virtual void OnPointerDown(PointerEventData eventData)
@@ -86,11 +99,6 @@ namespace ReLost.NPCs.Occupations.Vendors
             {
                 BuyOrSellCaller();
             }
-        }
-
-        public override void OnDrop(PointerEventData eventData)
-        {
-            return;
         }
 
         private void ReferencesAsigner()
@@ -103,9 +111,9 @@ namespace ReLost.NPCs.Occupations.Vendors
 
         public void BuyOrSellCaller()
         {
-            if (referencer.playerInventory.Money >= thisItemToSellOrBuy.item.BuyPrice || !(scenarioData.IsFirstContainerBuying))
+            if (referencer.playerInventory.container.money >= dataBase.ItemObjects[thisItemToSellOrBuy.item.Id].buyPrice || !(scenarioData.IsFirstContainerBuying))
             {
-                if (thisItemToSellOrBuy.item.MaxStack > 1)
+                if (dataBase.ItemObjects[thisItemToSellOrBuy.item.Id].maxStack > 1)
                 {
                     quantityToBuyOrSell.gameObject.SetActive(false);
                     quantityToBuyOrSell.gameObject.transform.position = Input.mousePosition;

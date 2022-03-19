@@ -1,14 +1,25 @@
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 
-namespace ReLost.PlayerInventory.Items {
+namespace ReLost.Inventory.Items {
     public class ItemDestroyer : MonoBehaviour
     {
-        private ItemSlot itemToDestroy;
+        private InventorySlot itemToDestroy;
         [SerializeField] private TMP_InputField inputQuantity;
-        [SerializeField] private Inventory inventory = null;
+        [SerializeField] private InventoryObject inventory = null;
         [SerializeField] private TextMeshProUGUI confirmationText = null;
+        [SerializeField] private InventoryItemDataBase dataBase;
         private int inputQuantityToStringToInt;
+
+        private void Awake()
+        {
+#if UNITY_EDITOR
+            dataBase = (InventoryItemDataBase)AssetDatabase.LoadAssetAtPath("Assets/Resources/Items/DataBase/Item Database.asset", typeof(InventoryItemDataBase));
+#else
+            dataBase = Resources.Load<InventoryItemDataBase>("Items/DataBase/Item Database");
+#endif
+        }
 
         public void GetQuantity()
         {
@@ -33,14 +44,14 @@ namespace ReLost.PlayerInventory.Items {
         }
         public void TextMaxSetter()
         {
-             var inventoryItem = itemToDestroy.item;
+             var inventoryItem = itemToDestroy;
             if (inventoryItem != null)
             {
 
-                if (inventory.HasItem(inventoryItem))
+                if (inventory.HasItem(inventoryItem.item))
                 {
 
-                    int quantityCount = inventory.GetTotalQuantity(inventoryItem);
+                    int quantityCount = inventory.GetTotalQuantity(inventoryItem.item);
                     if (inputQuantity.text != "")
                     {
 
@@ -69,16 +80,15 @@ namespace ReLost.PlayerInventory.Items {
 
         }
 
-        public void SetItemSlot(ItemSlot itemSlot)
+        public void SetItemSlot(InventorySlot itemSlot)
         {
-            this.itemToDestroy = itemSlot;
+            itemToDestroy = itemSlot;
         }
         public void ConfirmDestroy()
         {
-            if (itemToDestroy.item.MaxStack > 1)
+            if (dataBase.ItemObjects[itemToDestroy.item.Id].maxStack > 1)
             {
-                itemToDestroy.quantity = inputQuantityToStringToInt;
-                confirmationText.text = $"¿Estas seguro de que quieres destruir: {itemToDestroy.quantity}x {itemToDestroy.item.ColouredName}?";
+                confirmationText.text = $"¿Estas seguro de que quieres destruir: {inputQuantityToStringToInt}x {itemToDestroy.item.ColouredName}?";
                 gameObject.SetActive(true);
             }else
             {
@@ -93,7 +103,15 @@ namespace ReLost.PlayerInventory.Items {
         {
 
             inputQuantity.text = "";
-            inventory.RemoveItem(itemToDestroy);
+            if(dataBase.ItemObjects[itemToDestroy.item.Id].maxStack == 1)
+            {
+                inventory.RemoveAt(itemToDestroy.index);
+            }
+            else
+            {
+                inventory.RemoveItem(itemToDestroy.item, inputQuantityToStringToInt);
+            }
+            
             inputQuantityToStringToInt = 0;
         }
     }

@@ -1,4 +1,4 @@
-using ReLost.PlayerInventory.Items;
+using ReLost.Inventory.Items;
 using UnityEngine.Events;
 
 namespace ReLost.Events

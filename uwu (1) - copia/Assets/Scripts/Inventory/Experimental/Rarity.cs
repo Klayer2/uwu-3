@@ -1,15 +1,13 @@
 using UnityEngine;
 
-namespace ReLost.PlayerInventory.Items
+namespace ReLost.Inventory.Items
 {
-
-    [CreateAssetMenu(fileName = "New Rarity", menuName = "Items/Rarity")]
+    
+    [CreateAssetMenu(fileName = "New Rarity", menuName = "Inventory System/Items/Rarity")]
+    [System.Serializable]
     public class Rarity : ScriptableObject
     {
-        [SerializeField] private new string name = "New Rarity Name";
-        [SerializeField] private Color textColour = new Color(1f, 1f, 1f, 1f);
-
-        public string Name { get { return name; } }
-        public Color TextColour { get { return textColour; } }
+        public new string name = "New Rarity Name";
+        public Color textColour = new Color(1f, 1f, 1f, 1f);
     }
 }

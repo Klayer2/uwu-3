@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: eea8b866c14f1a74abefb654ceaf3a52
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - rarityListReference: {fileID: 11400000, guid: acb38a34f30e95449ab752356d906d1f, type: 2}
+  - inventoryItemDataBase: {fileID: 11400000, guid: 0a562ba18a33d4d40ac08e890e42586d, type: 2}
+  - itemToAddInEditor: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

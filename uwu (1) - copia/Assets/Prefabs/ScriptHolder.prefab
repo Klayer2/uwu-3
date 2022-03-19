@@ -79,8 +79,10 @@ MonoBehaviour:
   quantityToDestroy: {fileID: 0}
   itemDestroyer: {fileID: 0}
   buySellQuantity: {fileID: 0}
-  playerInventory: {fileID: 0}
+  playerInventory: {fileID: 11400000, guid: 5b9a09e86e84da34ca17cd889adc838a, type: 2}
   vendorSystem: {fileID: 0}
+  pickUpDynamicInterface: {fileID: 0}
+  hoverPopUpInfo: {fileID: 0}
 --- !u!114 &1969400885
 MonoBehaviour:
   m_ObjectHideFlags: 0

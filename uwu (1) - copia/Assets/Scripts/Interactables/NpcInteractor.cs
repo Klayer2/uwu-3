@@ -9,10 +9,12 @@ namespace ReLost.Interactables
         [SerializeField]private GameObject NormalVendorCanvas = null;
         [SerializeField]private GameObject NormalNpcCanvas = null;
         [SerializeField]private ObjectInteractor objectInteractor;
+        private GameObject inventoryInterface;
         private List<IInteractable> npcToInteract;
 
         private void Awake()
         {
+            inventoryInterface = GameObject.Find("-----------UI-------------").transform.GetChild(0).gameObject;
             npcToInteract = new List<IInteractable>();
         }
 
@@ -25,11 +27,13 @@ namespace ReLost.Interactables
         {
             if (Input.GetButtonDown("Interact"))
             {
+                if (inventoryInterface.activeInHierarchy == true) { return; }
                 if (npcToInteract.Count > 0 && !(objectInteractor.availableObjects > 0))
                 {
                     for (int i = npcToInteract.Count - 1; i < npcToInteract.Count; i++)
                     {
                         npcToInteract[i].Interact(transform.root.gameObject);
+                        break;
                     }
                 }
                 else { return; }

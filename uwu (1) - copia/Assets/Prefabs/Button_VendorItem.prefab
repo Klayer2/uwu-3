@@ -203,7 +203,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a9f3eecbf5e013e41a7476dd341066bf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 766e2ec30868c67428e79e722af8bd24, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -445,13 +445,36 @@ MonoBehaviour:
   inventoryItemQuantityText: {fileID: 3412374835568231304}
   thisItemQuantityText: {fileID: 6581022385226552196}
   thisItemPriceText: {fileID: 4679732426554996719}
-  thisItem: {fileID: 0}
+  thisItem:
+    Id: -1
+    rarity: {fileID: 0}
+    Name: 
+    useText: 
+    uiDisplay: {fileID: 0}
+    buffs: []
+    canBeBoughtInfinitely: 0
+    isUsableInfinitely: 0
+    itemTypeID: 0
+    itemSubTypeID: 0
   onStartHoveringItem: {fileID: 11400000, guid: 74460b714bf7f0f4294eb1a33a44d566, type: 2}
   quantityToBuyOrSell: {fileID: 0}
   confirmWindow: {fileID: 0}
   thisItemToSellOrBuy:
-    item: {fileID: 0}
-    quantity: 0
+    AllowedItems: 
+    item:
+      Id: -1
+      rarity: {fileID: 0}
+      Name: 
+      useText: 
+      uiDisplay: {fileID: 0}
+      buffs: []
+      canBeBoughtInfinitely: 0
+      isUsableInfinitely: 0
+      itemTypeID: 0
+      itemSubTypeID: 0
+    index: 0
+    amount: 0
+  dataBase: {fileID: 11400000, guid: 0a562ba18a33d4d40ac08e890e42586d, type: 2}
 --- !u!114 &884455686147435947
 MonoBehaviour:
   m_ObjectHideFlags: 0

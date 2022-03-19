@@ -13,6 +13,8 @@ namespace ReLost.GeneralTooltip
 
         [SerializeField] private TextMeshProUGUI contentField = null;
 
+        [SerializeField] private Image buffsField = null;
+
         [SerializeField] private LayoutElement layoutElement = null;
 
         private void OnEnable()

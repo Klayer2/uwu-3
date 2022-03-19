@@ -1,5 +1,5 @@
 using ReLost.Events;
-using ReLost.PlayerInventory.Items;
+using ReLost.Inventory.Items;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +11,7 @@ namespace ReLost.NPCs.Occupations.Vendors
     public class VendorItemHoverHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
     {     
         
-        [SerializeField] protected ItemSlotUI vendorItemUI = null;
+        [SerializeField] protected VendorItemUI vendorItemUI = null;
         [SerializeField] protected ItemEvent onMouseStartHoverItem = null;
         [SerializeField] protected VoidEvent onMouseEndHoverItem = null;
 
@@ -19,7 +19,7 @@ namespace ReLost.NPCs.Occupations.Vendors
         private Transform originalParent = null;
         private bool isHovering = false;
 
-        public ItemSlotUI VendorItemUI => vendorItemUI;
+        public VendorItemUI VendorItemUI => vendorItemUI;
 
 
         private void Awake()

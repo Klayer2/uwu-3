@@ -1,4 +1,4 @@
-using ReLost.PlayerInventory.Items;
+using ReLost.Inventory.Items;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

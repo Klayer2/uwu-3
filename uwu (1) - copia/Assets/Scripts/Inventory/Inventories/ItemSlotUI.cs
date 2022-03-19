@@ -2,14 +2,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace ReLost.PlayerInventory.Items
+namespace ReLost.Inventory.Items
 {
 
     public abstract class ItemSlotUI : MonoBehaviour, IDropHandler
     {
         [SerializeField] protected Image itemIconImage = null;
+        [SerializeField] protected Image itemIconBelowImage = null;
 
-        public int SlotIndex { get; private set; }
+        public int SlotIndex { get; set; }
 
         public abstract Item SlotItem { get; set; }
 
@@ -17,7 +18,6 @@ namespace ReLost.PlayerInventory.Items
 
         protected virtual void Start()
         {
-            SlotIndex = transform.GetSiblingIndex();
             UpdateSlotUI();
         }
 
@@ -25,10 +25,11 @@ namespace ReLost.PlayerInventory.Items
 
         public abstract void UpdateSlotUI();
 
-        protected virtual void EnableSlotUI(bool enable) => itemIconImage.enabled = enable;
-
-
-
+        protected virtual void EnableSlotUI(bool enable)
+        {
+            itemIconImage.enabled = enable;
+            itemIconBelowImage.enabled = enable;
+        }
     }
 
 

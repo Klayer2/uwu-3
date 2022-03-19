@@ -1,50 +1,62 @@
 using ReLost.NPCs.Occupations.Vendors;
-using ReLost.PlayerInventory.Items;
+using ReLost.PlayerNameSpace;
+using ReLost.Inventory.Items;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 
 public class BuySellQuantity : MonoBehaviour
 {
-    [SerializeField] private ItemSlot thisItem;
+    [SerializeField] private InventorySlot thisItem;
     [SerializeField] private TMP_InputField quantityToBuyOrSell = null;
     [SerializeField] private TextMeshProUGUI confirmationVendorTitle = null;
     [SerializeField] private TextMeshProUGUI confirmationVendorText = null;
     [SerializeField] private VendorSystem vendorSystem;
     [SerializeField] private GameObject confirmationVendorGameObject = null;
     public bool isPlayerInventorySelling = false;
-    [SerializeField] private Inventory playerInventory;
+    [SerializeField] private Player playerInventoryHolder;
     private VendorData scenarioData;
+    private InventoryItemDataBase dataBase;
     private int inputQuantityToStringToInt;
     private int maxBuyableAmount;
 
+    private void Awake()
+    {
+#if UNITY_EDITOR
+        dataBase = (InventoryItemDataBase)AssetDatabase.LoadAssetAtPath("Assets/Resources/Items/DataBase/Item Database.asset", typeof(InventoryItemDataBase));
+#else
+            dataBase = Resources.Load<InventoryItemDataBase>("Items/DataBase/Item Database");
+#endif
+        playerInventoryHolder = FindObjectOfType<Player>();
+    }
 
-
-    public void ItemReference(ItemSlot itemSlot, VendorData vendorData, bool isPlayerInventory)
+    public void ItemReference(InventorySlot itemSlot, VendorData vendorData, bool isPlayerInventory)
     {
         thisItem = itemSlot;
         scenarioData = vendorData;
         isPlayerInventorySelling = isPlayerInventory;
-        maxBuyableAmount = playerInventory.MaximumAmountOfItemThatCanGetIntoInventory(thisItem);
+        maxBuyableAmount = playerInventoryHolder.inventory.MaximumAmountOfItemThatCanGetIntoInventory(thisItem);
     }
 
-    public void InventoryItemReference(ItemSlot itemSlot, bool isPlayerInventory)
-    {
+    public void InventoryItemReference(InventorySlot itemSlot, bool isPlayerInventory)
+    {   
         thisItem = itemSlot;
         isPlayerInventorySelling = isPlayerInventory;
-        maxBuyableAmount = playerInventory.MaximumAmountOfItemThatCanGetIntoInventory(thisItem);
+        maxBuyableAmount = playerInventoryHolder.inventory.MaximumAmountOfItemThatCanGetIntoInventory(thisItem);
+
     }
 
     public void TextSBMaxSetter()
     {
-        if (thisItem.item is InventoryItem inventoryItem)
+        if (thisItem.item is Item inventoryItem)
         {
             if (isPlayerInventorySelling)
             {
-                if (playerInventory.HasItem(inventoryItem))
+                if (playerInventoryHolder.inventory.HasItem(inventoryItem))
                 {
                     if (quantityToBuyOrSell.text != "")
                     {
-                        int quantityCount = playerInventory.GetTotalQuantity(inventoryItem);
+                        int quantityCount = playerInventoryHolder.inventory.GetTotalQuantity(inventoryItem);
                         if (int.Parse(quantityToBuyOrSell.text) > quantityCount)
                         {
                             quantityToBuyOrSell.text = quantityCount.ToString();
@@ -66,7 +78,7 @@ public class BuySellQuantity : MonoBehaviour
             {
                 if (quantityToBuyOrSell.text != "")
                 {
-                    if (!inventoryItem.IsUnlimited)
+                    if (!inventoryItem.canBeBoughtInfinitely)
                     {
                         int quantityCount = scenarioData.SellingItemContainer.GetTotalQuantity(inventoryItem);
                         if (int.Parse(quantityToBuyOrSell.text) > maxBuyableAmount)
@@ -83,7 +95,7 @@ public class BuySellQuantity : MonoBehaviour
                     }
                     else
                     {
-                        int maxBuyableQuantity = playerInventory.Money / inventoryItem.BuyPrice;
+                        int maxBuyableQuantity = playerInventoryHolder.inventory.container.money / dataBase.ItemObjects[inventoryItem.Id].buyPrice;
                         if (int.Parse(quantityToBuyOrSell.text) > maxBuyableAmount)
                         {
                             quantityToBuyOrSell.text = maxBuyableAmount.ToString();
@@ -107,24 +119,24 @@ public class BuySellQuantity : MonoBehaviour
         }
     }
 
-    private void ConfirmBuyOrSell(ItemSlot itemToBuyOrSell)
+    private void ConfirmBuyOrSell(InventorySlot itemToBuyOrSell)
     {
 
         if (isPlayerInventorySelling || !(scenarioData.IsFirstContainerBuying))
         {
-            confirmationVendorTitle.text = "Vender";
-            if (itemToBuyOrSell.item.MaxStack > 1)
+            confirmationVendorTitle.text = "Vender"; 
+            if (dataBase.ItemObjects[itemToBuyOrSell.item.Id].maxStack > 1)
             {
-                if (itemToBuyOrSell.quantity > 1)
+                if (itemToBuyOrSell.amount > 1)
                 {
-                    itemToBuyOrSell.quantity = inputQuantityToStringToInt;
+                    itemToBuyOrSell.amount = inputQuantityToStringToInt;
                 }
-                confirmationVendorText.text = $"¿Estas seguro de que quieres Vender: {itemToBuyOrSell.quantity}x {itemToBuyOrSell.item.ColouredName} a {itemToBuyOrSell.item.SellPrice * itemToBuyOrSell.quantity} <sprite=0>?";
+                confirmationVendorText.text = $"¿Estas seguro de que quieres Vender: {itemToBuyOrSell.amount}x {itemToBuyOrSell.item.ColouredName} a { dataBase.ItemObjects[itemToBuyOrSell.item.Id].sellPrice * itemToBuyOrSell.amount} <sprite=0>?";
                 confirmationVendorGameObject.SetActive(true);
             }
             else
             {
-                confirmationVendorText.text = $"¿Estas seguro de que quieres Vender: {itemToBuyOrSell.item.ColouredName} a {itemToBuyOrSell.item.SellPrice} <sprite=0>?";
+                confirmationVendorText.text = $"¿Estas seguro de que quieres Vender: {itemToBuyOrSell.item.ColouredName} a { dataBase.ItemObjects[itemToBuyOrSell.item.Id].sellPrice} <sprite=0>?";
                 confirmationVendorGameObject.SetActive(true);
             }
         }
@@ -132,18 +144,18 @@ public class BuySellQuantity : MonoBehaviour
         else
         {
             confirmationVendorTitle.text = "Comprar";
-            if (itemToBuyOrSell.item.MaxStack > 1)
+            if (dataBase.ItemObjects[itemToBuyOrSell.item.Id].maxStack > 1)
             {
-                if (itemToBuyOrSell.quantity > 1)
+                if (itemToBuyOrSell.amount > 1)
                 {
-                    itemToBuyOrSell.quantity = inputQuantityToStringToInt;
+                    itemToBuyOrSell.amount = inputQuantityToStringToInt;
                 }
-                confirmationVendorText.text = $"¿Estas seguro de que quieres comprar: {itemToBuyOrSell.quantity}x {itemToBuyOrSell.item.ColouredName} a {itemToBuyOrSell.item.BuyPrice * itemToBuyOrSell.quantity} <sprite=0>?";
+                confirmationVendorText.text = $"¿Estas seguro de que quieres comprar: {itemToBuyOrSell.amount}x {itemToBuyOrSell.item.ColouredName} a { dataBase.ItemObjects[itemToBuyOrSell.item.Id].buyPrice * itemToBuyOrSell.amount} <sprite=0>?";
                 confirmationVendorGameObject.SetActive(true);
             }
             else
             {
-                confirmationVendorText.text = $"¿Estas seguro de que quieres comprar: {itemToBuyOrSell.item.ColouredName} a {itemToBuyOrSell.item.BuyPrice} <sprite=0>?";
+                confirmationVendorText.text = $"¿Estas seguro de que quieres comprar: {itemToBuyOrSell.item.ColouredName} a { dataBase.ItemObjects[itemToBuyOrSell.item.Id].buyPrice} <sprite=0>?";
                 confirmationVendorGameObject.SetActive(true);
             }
         }
@@ -157,7 +169,7 @@ public class BuySellQuantity : MonoBehaviour
 
             if (inputQuantityToStringToInt > 0)
             {
-                thisItem.quantity = inputQuantityToStringToInt;
+                thisItem.amount = inputQuantityToStringToInt;
                 ConfirmBuyOrSell(thisItem);
             }
             else
@@ -178,22 +190,22 @@ public class BuySellQuantity : MonoBehaviour
     {
         if (isPlayerInventorySelling || !(scenarioData.IsFirstContainerBuying))
         { 
-            playerInventory.AddMoney(thisItem.item.SellPrice * inputQuantityToStringToInt);
-            playerInventory.RemoveItem(thisItem);
+            playerInventoryHolder.AddMoney(dataBase.ItemObjects[thisItem.item.Id].sellPrice * inputQuantityToStringToInt);
+            playerInventoryHolder.inventory.RemoveItem(thisItem.item, inputQuantityToStringToInt);
             vendorSystem.SetCurrentContainer(scenarioData.IsFirstContainerBuying);
             
         }
         else
         {
-            if(thisItem.quantity > maxBuyableAmount)
+            if(thisItem.amount > maxBuyableAmount)
             {
-                thisItem.quantity = maxBuyableAmount;
+                thisItem.amount = maxBuyableAmount;
             }
-            playerInventory.ReduceMoney(thisItem.item.BuyPrice * thisItem.quantity);
-            playerInventory.AddItem(thisItem);
-            if (!thisItem.item.IsUnlimited)
+            playerInventoryHolder.ReduceMoney(dataBase.ItemObjects[thisItem.item.Id].buyPrice * thisItem.amount);
+            playerInventoryHolder.inventory.AddItem(thisItem.item, thisItem.amount);
+            if (!thisItem.item.canBeBoughtInfinitely)
             {
-                scenarioData.SellingItemContainer.RemoveItem(thisItem);
+                scenarioData.SellingItemContainer.RemoveItem(thisItem.item, inputQuantityToStringToInt);
             }
             vendorSystem.SetCurrentContainer(scenarioData.IsFirstContainerBuying);
         }

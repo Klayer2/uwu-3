@@ -1,4 +1,4 @@
-using ReLost.PlayerInventory.Items.Hotbars;
+using ReLost.Inventory.Items.Hotbars;
 using UnityEngine;
 
 namespace ReLost.Magic
@@ -14,7 +14,7 @@ namespace ReLost.Magic
 
         public string Name => name;
 
-        public Sprite Icon => Icon;
+        public Sprite UiDisplay => UiDisplay;
         public Element Element => element;
 
         public void Use()
